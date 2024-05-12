@@ -56,13 +56,15 @@
     </header>
 
     <div class="content">
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname"><br><br>
+        <label for="lastname">Last name:</label>
+        <input type="text" id="lastname" name="lastname"><br><br>
         <label for="username">Username:</label>
         <input type="text" id="username" name="username"><br><br>
         <label for="password">Password:</label>
         <input type="text" id="password" name="password"><br><br>
-        <button type="button" class="btn btn-primary ms-1">Login</button>
-        <a href="{% url 'register' %}" class="btn btn-light">Register</button>
-        <!-- <button type="button" class="btn btn-primary btn-lg">Button</button> -->
+        <button type="button" class="btn btn-primary ms-1">Submit</button>
 
     </div>
     <footer>
