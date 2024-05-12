@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-=5qs1u@8%cny1&qdlgem5+jcauolybwb9waoz1)k9*6k(*kcv)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["dppvwa.ngrok.pizza"]
+ALLOWED_HOSTS = ["dppvwa.ngrok.pizza", "localhost"]
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'User',
 ]
 
 MIDDLEWARE = [
