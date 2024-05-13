@@ -60,7 +60,7 @@
         <input type="text" id="username" name="username"><br><br>
         <label for="password">Password:</label>
         <input type="text" id="password" name="password"><br><br>
-        <button type="button" class="btn btn-primary ms-1">Login</button>
+        <button type="button" class="btn btn-primary ms-1" id="login">Login</button>
         <a href="{% url 'register' %}" class="btn btn-light">Register</button>
         <!-- <button type="button" class="btn btn-primary btn-lg">Button</button> -->
 
@@ -69,6 +69,29 @@
         <p>Mobile Security - This app is NOT safe.</p>
     </footer>
 
+    <script>
+        let username = document.getElementById("username");
+        let password = document.getElementById("password");
+        let login = document.getElementById("login");
+
+        login.onclick = async function() {
+            const addData = new FormData();
+            addData.append("username", username.value);
+            addData.append("password", password.value);
+
+            let tableParam = {
+                method: 'POST',
+                body: addData,
+            };
+
+            const res = await fetch("{% url 'login_api' %}", tableParam);
+            let json_data = await res.json();
+            if (json_data["Status"] != 1) {
+                document.cookie = "usertoken=" + json_data["Status"];
+                window.location.href = "{% url 'passwords' %}";
+            }
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

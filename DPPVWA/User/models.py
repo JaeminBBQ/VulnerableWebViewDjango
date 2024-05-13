@@ -7,3 +7,4 @@ class App_User(models.Model):
     password = models.CharField(max_length=10)
     first_name = models.CharField(max_length=15)
     last_name = models.CharField(max_length=15)
+    token = models.CharField(max_length=30, null=True, blank=True)
