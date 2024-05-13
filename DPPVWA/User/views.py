@@ -56,3 +56,70 @@ def loginAPI(request):
             return JsonResponse({"Status":token})
         else:
             return JsonResponse({"Status":1})
+
+@api_view(['POST'])
+def add_passwordAPI(request):
+    website = request.POST["website"]
+    username = request.POST["username"]
+    password = request.POST["password"]
+    token = request.POST["token"]
+
+    with connection.cursor() as cursor:
+        cursor.execute(f"""
+                SELECT * FROM User_app_user
+                WHERE token='{token}';
+            """)
+        rows = cursor.fetchall()
+        relation_id = rows[0][0]
+        cursor.execute(f"""
+                INSERT INTO User_passwords (website, username, password, relation_id)
+                VALUES ('{website}', '{username}', '{password}', '{relation_id}');
+            """)
+    
+    return JsonResponse({"Status":0})
+
+@api_view(['POST'])
+def get_passwordAPI(request):
+    token = request.POST["token"]
+
+    with connection.cursor() as cursor:
+        cursor.execute(f"""
+                SELECT * FROM User_app_user
+                WHERE token='{token}';
+            """)
+        rows = cursor.fetchall()
+        relation_id = rows[0][0]
+        cursor.execute(f"""
+                SELECT * FROM User_passwords
+                WHERE relation_id='{relation_id}';
+            """)
+        rows = cursor.fetchall()
+    
+    return JsonResponse({"Status":rows})
+
+@api_view(['POST'])
+def search_passwordAPI(request):
+    search = request.POST["search"]
+    token = request.POST["token"]
+
+    with connection.cursor() as cursor:
+        cursor.execute(f"""
+                SELECT * FROM User_app_user
+                WHERE token='{token}';
+            """)
+        rows = cursor.fetchall()
+        relation_id = rows[0][0]
+        if search:
+            cursor.execute(f"""
+                    SELECT * FROM User_passwords
+                    WHERE relation_id='{relation_id}' AND website LIKE '{search}';
+                """)
+        else:
+            cursor.execute(f"""
+                SELECT * FROM User_passwords
+                WHERE relation_id='{relation_id}';
+            """)
+        rows = cursor.fetchall()
+    
+    return JsonResponse({"Status":rows})
+
